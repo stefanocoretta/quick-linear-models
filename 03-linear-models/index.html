@@ -4,7 +4,7 @@
     <title>Linear models: The basics</title>
     <meta charset="utf-8" />
     <meta name="author" content="Stefano Coretta" />
-    <meta name="date" content="2022-02-02" />
+    <meta name="date" content="2022-02-04" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 # Linear models: The basics
 ### Stefano Coretta
 ### University of Edinburgh
-### 2022-02-02
+### 2022-02-04
 
 ---
 
@@ -67,7 +67,7 @@ class: center middle inverse
 
 .f2[$$x = (2, 4, 5, 8, 10, 23, 36)$$]
 
-.f2[$$y = (7, 11, 13, 19, 23, 49, 75)$$]
+.f2[$$y = (8, 14, 17, 26, 32, 71, 110)$$]
 
 ## Find:
 
@@ -111,19 +111,19 @@ Measurements are .red[noisy].
 
 ---
 
-# Linear model
+# Linear model: the basics
 
 &lt;img src="index_files/figure-html/lm-plot-1.png" height="500px" style="display: block; margin: auto;" /&gt;
 
 ---
 
-# Linear model
+# Linear model: the basics
 
 &lt;img src="index_files/figure-html/lm-plot-2-1.png" height="500px" style="display: block; margin: auto;" /&gt;
 
 ---
 
-# Linear model
+# Linear model: the basics
 
 
 .f1[
@@ -132,7 +132,7 @@ Measurements are .red[noisy].
 
 ---
 
-# Linear model
+# Linear model: the basics
 
 
 .f1[
@@ -156,13 +156,234 @@ We know `\(x\)` and `\(y\)` and we need to .green[estimate] `\(\beta_0\)` and `\
 
 ---
 
+# Linear model: the basics
 
-* We can add more predictors
-    * `\(y = \beta_0 + \beta_1x_1 + \beta_2x_2 + ... + \beta_nx_n\)`
+&lt;img src="index_files/figure-html/sample-2-1.png" height="500px" style="display: block; margin: auto;" /&gt;
 
-* `lm(y ~ x, data)` ('$y$ as a function of `\(x\)`')
+---
+
+# Linear model: the basics
 
 
+```r
+line_lm &lt;- lm(y ~ x, data = line)
+summary(line_lm)
+```
+
+```
+## 
+## Call:
+## lm(formula = y ~ x, data = line)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -25.2197  -5.2243   0.3434   6.2411  20.7275 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  1.99182    2.66626   0.747    0.459    
+## x            3.02079    0.04762  63.432   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 10.07 on 48 degrees of freedom
+## Multiple R-squared:  0.9882,	Adjusted R-squared:  0.988 
+## F-statistic:  4024 on 1 and 48 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+
+# Linear model: the basics
+
+&lt;img src="index_files/figure-html/line-model-1.png" height="500px" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Categorical predictors
+
+&lt;img src="index_files/figure-html/categorical-1.png" height="500px" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Categorical predictors
+
+&lt;img src="index_files/figure-html/categorical-2-1.png" height="500px" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Categorical predictors
+
+
+.f1[
+`$$y = \beta_0 + \beta_1x + \beta_2group$$`
+]
+
+&lt;br&gt;
+
+--
+
+.f2[
+`$$\beta_0 = \text{intercept}$$`
+`$$\beta_1 = \text{coefficient for } x$$`
+`$$\beta_2 = \text{coefficient for } group$$`
+]
+
+--
+
+&lt;br&gt;
+
+We know `\(x\)`, `\(y\)` and `\(group\)` (`A` or `B`) and we need to .green[estimate] `\(\beta_0\)`, `\(\beta_1\)` and `\(\beta_2\)`.
+
+---
+
+class: center middle inverse
+
+# But `\(group\)` is not numeric!!!
+
+--
+
+# So we make it...
+
+---
+
+# Dummy coding
+
+.f3[
+|     | group    |
+| --- | -------: |
+| A   | 0        |
+| B   | 1        |
+]
+
+&lt;br&gt;
+
+`$$y = \beta_0 + \beta_1x + \beta_2group$$`
+
+&lt;br&gt;
+
+--
+
+`$$y(group = A) = \beta_0 + \beta_1x + \beta_2 \cdot 0 = \beta_0 + \beta_1x$$`
+
+&lt;br&gt;
+
+--
+
+`$$y(group = B) = \beta_0 + \beta_1x + \beta_2 \cdot 1 =  \beta_0 + \beta_1x + \beta_2$$`
+
+`$$= \beta_0 + \beta_2 + \beta_1x$$`
+
+
+---
+
+# Categorical predictors
+
+
+```r
+group_lm &lt;- lm(y ~ x + group, data = line_groups)
+summary(group_lm)
+```
+
+```
+## 
+## Call:
+## lm(formula = y ~ x + group, data = line_groups)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.4707 -0.6653 -0.0259  0.6739  2.4050 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   2.1299     0.1482   14.38   &lt;2e-16 ***
+## x             3.1164     0.1123   27.74   &lt;2e-16 ***
+## groupB        6.0808     0.2102   28.93   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.046 on 97 degrees of freedom
+## Multiple R-squared:  0.9382,	Adjusted R-squared:  0.9369 
+## F-statistic: 735.7 on 2 and 97 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+
+# Interactions
+
+&lt;img src="index_files/figure-html/interactions-1.png" height="500px" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Interactions
+
+&lt;img src="index_files/figure-html/interactions-2-1.png" height="500px" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Interactions
+
+
+`$$y = \beta_0 + \beta_1 \cdot x + \beta_2 \cdot group + \beta_3 \cdot x \cdot group$$`
+
+&lt;br&gt;
+
+--
+
+`$$y(group = A) = \beta_0 + \beta_1 \cdot x + \beta_2 \cdot 0 + \beta_3 \cdot x \cdot 0 = \beta_0 + \beta_1 \cdot x$$`
+
+&lt;br&gt;
+
+--
+
+`$$y(group = B) = \beta_0 + \beta_1 \cdot x + \beta_2 \cdot 1 + \beta_3 \cdot x \cdot 1$$`
+
+`$$= \beta_0 + \beta_2 + \beta_1 \cdot x + \beta_3 \cdot x$$`
+
+&lt;br&gt;
+
+--
+
+We know `\(x\)`, `\(y\)` and `\(group\)` (`A` or `B`) and we need to .green[estimate] `\(\beta_0\)`, `\(\beta_1\)`, `\(\beta_2\)` and `\(\beta_3\)`.
+
+
+---
+
+# Interactions
+
+
+```r
+interaction_lm &lt;- lm(y ~ x + group + x:group, data = line_groups)
+summary(interaction_lm)
+```
+
+```
+## 
+## Call:
+## lm(formula = y ~ x + group + x:group, data = line_groups)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.31870 -0.75687  0.06441  0.69307  2.21592 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   1.9501     0.1468  13.282  &lt; 2e-16 ***
+## x             3.3541     0.1951  17.195  &lt; 2e-16 ***
+## groupB        5.8613     0.2072  28.288  &lt; 2e-16 ***
+## x:groupB     -2.1912     0.2413  -9.082  1.4e-14 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.031 on 96 degrees of freedom
+## Multiple R-squared:  0.9176,	Adjusted R-squared:  0.915 
+## F-statistic: 356.4 on 3 and 96 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+
+# Interactions
+
+`$$y = 1.95 + 3.35 \cdot x + 5.86 \cdot group + -2.19 \cdot x \cdot group$$`
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
