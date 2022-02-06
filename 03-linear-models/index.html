@@ -104,6 +104,12 @@ Measurements are .red[noisy].
 
 ---
 
+class: center middle inverse
+
+# If `\(x\)` changes, what happens to `\(y\)`?
+
+---
+
 # Now enter Linear Models
 
 &lt;div style="width:100%;height:0;padding-bottom:42%;position:relative;"&gt;&lt;iframe src="https://giphy.com/embed/3owzVYjZSzuFivWpHi" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;&lt;/div&gt;
@@ -157,6 +163,7 @@ Measurements are .red[noisy].
 
 We know `\(x\)` and `\(y\)` and we need to .green[estimate] `\(\beta_0\)` and `\(\beta_1\)`.
 
+
 ---
 
 # Linear model: the basics
@@ -202,6 +209,12 @@ summary(line_lm)
 
 ---
 
+class: center middle inverse
+
+# What if we have groups/conditions?
+
+---
+
 # Categorical predictors
 
 &lt;img src="index_files/figure-html/categorical-1.png" height="500px" style="display: block; margin: auto;" /&gt;
@@ -239,13 +252,16 @@ We know `\(x\)`, `\(y\)` and `\(group\)` (`A` or `B`) and we need to .green[esti
 
 ---
 
-class: center middle inverse
+class: bottom
+background-image: url(../img/hannah-grace-fk4tiMlDFF0-unsplash.jpg)
+background-size: cover
 
-# But `\(group\)` is not numeric!!!
+# .white[But *group* is not numeric!!!]
 
---
+???
 
-# So we make it...
+Photo by &lt;a href="https://unsplash.com/@oddityandgrace?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText"&gt;hannah grace&lt;/a&gt; on &lt;a href="https://unsplash.com/s/photos/surprised-puppy?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText"&gt;Unsplash&lt;/a&gt;
+
 
 ---
 
@@ -308,6 +324,12 @@ summary(group_lm)
 ## Multiple R-squared:  0.9382,	Adjusted R-squared:  0.9369 
 ## F-statistic: 735.7 on 2 and 97 DF,  p-value: &lt; 2.2e-16
 ```
+
+---
+
+class: center middle inverse
+
+# What if `\(y\)` does not change the same way in both groups/conditions?
 
 ---
 
@@ -434,6 +456,22 @@ summary(interaction_lm)
 ## Multiple R-squared:  0.9176,	Adjusted R-squared:  0.915 
 ## F-statistic: 356.4 on 3 and 96 DF,  p-value: &lt; 2.2e-16
 ```
+
+---
+
+# Summary
+
+* The simplest .orange[**linear model**] is a straight line.
+
+`$$y = \beta_0 + \beta_1 x$$`
+
+* We want to estimate the `\(\beta_n\)` .orange[**coefficients**].
+
+`$$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_4 x_1 x_2 + \beta_3 x_3$$`
+
+* Categorical predictors are .orange[dummy coded].
+
+* .orange[**Interactions**] model differences of the effects of the predictors on the outcome across groups/conditions.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

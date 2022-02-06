@@ -131,6 +131,12 @@ ggplot(line, aes(x, y)) +
 
 ---
 
+class: center middle inverse
+
+# If $x$ changes, what happens to $y$?
+
+---
+
 # Now enter Linear Models
 
 <div style="width:100%;height:0;padding-bottom:42%;position:relative;"><iframe src="https://giphy.com/embed/3owzVYjZSzuFivWpHi" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div>
@@ -202,6 +208,7 @@ $$\beta_1 = slope$$
 
 We know $x$ and $y$ and we need to .green[estimate] $\beta_0$ and $\beta_1$.
 
+
 ---
 
 # Linear model: the basics
@@ -236,6 +243,12 @@ ggplot(line, aes(x, y)) +
   geom_abline(intercept = 2, slope = 3, size = 2) +
   labs(title = bquote(italic(y) == "2" + "3" * italic(x)))
 ```
+
+---
+
+class: center middle inverse
+
+# What if we have groups/conditions?
 
 ---
 
@@ -297,13 +310,16 @@ We know $x$, $y$ and $group$ (`A` or `B`) and we need to .green[estimate] $\beta
 
 ---
 
-class: center middle inverse
+class: bottom
+background-image: url(../img/hannah-grace-fk4tiMlDFF0-unsplash.jpg)
+background-size: cover
 
-# But $group$ is not numeric!!!
+# .white[But *group* is not numeric!!!]
 
---
+???
 
-# So we make it...
+Photo by <a href="https://unsplash.com/@oddityandgrace?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">hannah grace</a> on <a href="https://unsplash.com/s/photos/surprised-puppy?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+
 
 ---
 
@@ -343,6 +359,12 @@ $$= \beta_0 + \beta_2 + \beta_1x$$
 group_lm <- lm(y ~ x + group, data = line_groups)
 summary(group_lm)
 ```
+
+---
+
+class: center middle inverse
+
+# What if $y$ does not change the same way in both groups/conditions?
 
 ---
 
@@ -446,3 +468,19 @@ $$= 1.95 + 3.35 \cdot x + 5.86 + (-2.19) \cdot x$$
 ```{r lm-interaction-2}
 summary(interaction_lm)
 ```
+
+---
+
+# Summary
+
+* The simplest .orange[**linear model**] is a straight line.
+
+$$y = \beta_0 + \beta_1 x$$
+
+* We want to estimate the $\beta_n$ .orange[**coefficients**].
+
+$$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_4 x_1 x_2 + \beta_3 x_3$$
+
+* Categorical predictors are .orange[dummy coded].
+
+* .orange[**Interactions**] model differences of the effects of the predictors on the outcome across groups/conditions.
