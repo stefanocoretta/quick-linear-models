@@ -29,6 +29,11 @@ library(xaringanExtra)
 use_xaringan_extra(c("panelset", "tachyons"))
 ```
 
+class: center middle inverse
+
+# Slido quiz 1
+
+---
 
 class: inverse
 background-image: url(../img/time-travel.jpg)
@@ -208,6 +213,12 @@ $$\beta_1 = slope$$
 
 We know $x$ and $y$ and we need to .green[estimate] $\beta_0$ and $\beta_1$.
 
+
+---
+
+class: center middle inverse
+
+# Slido quiz 2
 
 ---
 
@@ -467,6 +478,26 @@ $$= 1.95 + 3.35 \cdot x + 5.86 + (-2.19) \cdot x$$
 
 ```{r lm-interaction-2}
 summary(interaction_lm)
+```
+
+---
+
+# Slido quiz 3: Which formula corresponds to this graph?
+
+```{r groups-only}
+n <- 200
+group <- rep(c("A", "B"), each = n / 2)
+y <- ifelse(group == "A", rnorm(n / 2, 3, 2), rnorm(n / 2, 6, 1.5))
+
+line_groups <- tibble(
+ y, group
+)
+
+ggplot(line_groups, aes(group, y, colour = group)) +
+  geom_jitter(size = 4, alpha = 0.7, width = 0.2) +
+  stat_summary(fun = "mean", geom = "point", colour = "black", size = 5) +
+  scale_color_brewer(type = "qual") +
+  theme(legend.position = "bottom")
 ```
 
 ---
