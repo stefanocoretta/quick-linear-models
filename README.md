@@ -4,4 +4,4 @@
 -   refreshR
 -   Data import and visualisation
 -   [Linear models: the basics](./03-linear-models/index.html)
--   Fit linear models
+-   [Fit linear models](./04-fit-models/index.html)
