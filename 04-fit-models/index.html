@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Linear models: Advanced topics</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Stefano Coretta" />
+    <meta name="date" content="2022-03-04" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="../ipa-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="../custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Linear models: Advanced topics
+### Stefano Coretta
+### University of Edinburgh
+### 2022-03-04
+
+---
+
+
+
+
+# Summary from last time
+
+* The simplest .orange[**linear model**] is a straight line.
+
+`$$y = \beta_0 + \beta_1 x$$`
+
+* We want to estimate the `\(\beta_n\)` .orange[**coefficients**].
+
+`$$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_4 x_1 x_2 + \beta_3 x_3$$`
+
+* Categorical predictors are .orange[dummy coded].
+
+* .orange[**Interactions**] model differences of the effects of the predictors on the outcome across groups/conditions.
+
+---
+
+class: center middle
+
+![:scale 40%](../img/charlesdeluvio-D44HIk-qsvI-unsplash.jpg)
+
+???
+
+Photo by &lt;a href="https://unsplash.com/@charlesdeluvio?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText"&gt;charlesdeluvio&lt;/a&gt; on &lt;a href="https://unsplash.com/s/photos/sad-puppy?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText"&gt;Unsplash&lt;/a&gt;
+  
+---
+
+class: center middle
+
+![:scale 90%](../img/joe-caione-qO-PIF84Vxg-unsplash.jpg)
+
+???
+
+Photo by &lt;a href="https://unsplash.com/@joeyc?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText"&gt;Joe Caione&lt;/a&gt; on &lt;a href="https://unsplash.com/s/photos/happy-puppy?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText"&gt;Unsplash&lt;/a&gt;
+
+---
+
+# Exercise 1
+
+
+```
+## 
+## Call:
+## lm(formula = articulation_rate ~ attitude * musicstudent, data = polite)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.0869 -0.6740 -0.1004  0.6252  5.8252 
+## 
+## Coefficients:
+##                             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)                   7.1348     0.1349  52.898  &lt; 2e-16
+## attitudepol                  -0.5741     0.1907  -3.010  0.00292
+## musicstudentyes              -0.6675     0.2203  -3.030  0.00273
+## attitudepol:musicstudentyes   0.4409     0.3115   1.415  0.15839
+## 
+## Residual standard error: 1.128 on 220 degrees of freedom
+## Multiple R-squared:  0.07404,	Adjusted R-squared:  0.06141 
+## F-statistic: 5.864 on 3 and 220 DF,  p-value: 0.0007197
+```
+
+---
+
+# Exercise 1
+
+&lt;img src="index_files/figure-html/art-rate-plot-1.png" height="500px" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Exercise 2
+
+
+```
+## 
+## Call:
+## lm(formula = f0mn ~ attitude * years_in_ger, data = polite)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -109.21  -68.54   10.94   50.09  221.12 
+## 
+## Coefficients:
+##                          Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)              201.1803     8.7439  23.008   &lt;2e-16
+## attitudepol              -16.9127    12.2732  -1.378    0.170
+## years_in_ger               0.7916     1.4131   0.560    0.576
+## attitudepol:years_in_ger   1.1225     1.9959   0.562    0.574
+## 
+## Residual standard error: 69.5 on 208 degrees of freedom
+##   (12 observations deleted due to missingness)
+## Multiple R-squared:  0.01852,	Adjusted R-squared:  0.00436 
+## F-statistic: 1.308 on 3 and 208 DF,  p-value: 0.2728
+```
+
+---
+
+# Exercise 2
+
+&lt;img src="index_files/figure-html/f0-plot-1.png" height="500px" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Exercise 3
+
+
+```
+## 
+## Call:
+## lm(formula = ct ~ count * gesture * background, data = gestures)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -6.4081 -0.0543 -0.0096  0.0443  6.4612 
+## 
+## Coefficients:
+##                                      Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)                           0.04250    0.05389   0.789 0.430459
+## count                                 0.05316    0.01203   4.419 1.06e-05
+## gesturepoint                         -0.03288    0.07241  -0.454 0.649844
+## gesturereach                         -0.05245    0.07447  -0.704 0.481323
+## backgroundChinese                     0.01182    0.07391   0.160 0.872987
+## backgroundEnglish                    -0.04188    0.07418  -0.565 0.572416
+## count:gesturepoint                    0.08521    0.02285   3.729 0.000199
+## count:gesturereach                    0.03875    0.02185   1.773 0.076353
+## count:backgroundChinese               0.01143    0.01508   0.758 0.448524
+## count:backgroundEnglish               0.19619    0.02532   7.747 1.67e-14
+## gesturepoint:backgroundChinese       -0.03705    0.10101  -0.367 0.713811
+## gesturereach:backgroundChinese       -0.04620    0.10355  -0.446 0.655506
+## gesturepoint:backgroundEnglish       -0.07564    0.10082  -0.750 0.453208
+## gesturereach:backgroundEnglish        0.09170    0.10280   0.892 0.372491
+## count:gesturepoint:backgroundChinese  0.22048    0.02898   7.608 4.75e-14
+## count:gesturereach:backgroundChinese  0.22901    0.03409   6.718 2.56e-11
+## count:gesturepoint:backgroundEnglish  0.20844    0.03289   6.337 3.06e-10
+## count:gesturereach:backgroundEnglish -0.16156    0.03888  -4.156 3.42e-05
+## 
+## Residual standard error: 0.617 on 1575 degrees of freedom
+##   (27 observations deleted due to missingness)
+## Multiple R-squared:  0.7891,	Adjusted R-squared:  0.7868 
+## F-statistic: 346.7 on 17 and 1575 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+
+# Exercise 3
+
+&lt;img src="index_files/figure-html/ct-plot-1.png" height="500px" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Do you notice something weird?
+
+&lt;img src="index_files/figure-html/ct-plot-2-1.png" height="500px" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: center middle inverse
+
+# Probability distributions
+
+---
+
+# Continuous vs discrete
+
+.center[
+![:scale 90%](../img/discr-cont-probs.png)
+]
+
+---
+
+class: center middle
+
+.f1.link.dim.br3.ph3.pv2.mb2.dib.white.bg-purple[
+[.white[Probability distributions app]](https://seeing-theory.brown.edu/probability-distributions/index.html#section2)
+]
+
+---
+
+# Gaussian distribution (aka normal distribution)
+
+
+```r
+x_norm &lt;- rnorm(10, mean = 0, sd = 1)
+x_norm
+```
+
+```
+##  [1] -0.2623043 -1.2633027  0.6003291  0.7828663  2.7624742 -0.2418766
+##  [7] -0.4525371  1.0792690 -0.1550495  1.6177545
+```
+
+---
+
+# Gaussian distribution (aka normal distribution)
+
+
+```r
+plot(density(x_norm))
+```
+
+&lt;img src="index_files/figure-html/norm-plot-1.png" height="500px" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Bernoulli distribution (special case of Binomial)
+
+
+```r
+x_bern &lt;- rbernoulli(20, p = 0.75)
+x_bern
+```
+
+```
+##  [1] FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [13]  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE FALSE
+```
+
+```r
+table(x_bern)
+```
+
+```
+## x_bern
+## FALSE  TRUE 
+##     6    14
+```
+
+---
+
+class: center middle inverse
+
+# Think about the probability distribution of the outcome variable
+
+---
+
+# Continuous outcome variable
+
+* The variable can take on *any positive and negative real number, including 0*: **Gaussian** (aka normal) distribution.
+
+    * There are very few truly Gaussian variables, although in some cases one can speak of "approximate" or "assumed" normality.
+
+    * This family is fitted by default in `lm()`, `lme4::lmer()` and `brms::brm()`.
+
+--
+
+* The variable can take on *any positive number only*: **Log-normal** distribution.
+
+    * Duration of segments, words, pauses, etc, are known to be log-normally distributed.
+
+    * Measurements taken in Hz (like f0, formants, centre of gravity, ...) could be considered to be log-normal.
+
+    * There other families that could potentially be used depending on the nature of the variable: exponential-Gaussian (reaction times), gamma, ...
+
+---
+
+# Continuous outcome variable
+
+* The variable can take on *any number between 0 and 1, but not 0 nor 1*: **Beta** distribution.
+
+    * Proportions fall into this category (for example proportion of voicing within closure), although 0 and 1 are not allowed in the beta distribution.
+
+--
+
+* The variable can take on *any number between 0 and 1, including 0 or 0 and 1*: **Zero-inflated** or **Zero/one-inflated beta** (ZOIB) distribution.
+
+    * If the proportion data includes many 0s and 1s, then this is the ideal distribution to use. ZOIB distributions are somewhat more difficult to fit than a simple beta distribution, so a common practice is to transform the data so that it doesn't include 0s nor 1s (this can be achieved using different techniques, some better than others).
+
+---
+
+# Discrete outcome variable
+
+* The variable is *counts*: **Poisson** distribution.
+
+    * Counts of words, segments, gestures, f0 peaks, ...
+    
+--
+
+* The variable is *dichotomous*, i.e. it can take one of two levels: **Bernoulli** distribution.
+
+    * Categorical outcome variables like yes/no, correct/incorrect, voiced/voiceless, follow this distribution.
+
+    * This family is fitted by default when you run `glm(family = binomial)`, aka "logistic regression" or "binomial regression".
+
+--
+
+* The variable is a *scale*: **ordinal** linear model.
+
+    * Likert scales and ratings, language attitude questionnaires.
+
+    * Ordinal linear models, a.k.a. ordinal logistic regression, can be fitted with the [ordinal](https://cran.r-project.org/web/packages/ordinal/index.html) and the [brms](https://paul-buerkner.github.io/brms/) package.
+
+---
+
+
+
+
+---
+
+&lt;img src="index_files/figure-html/ct-2-plot-1.png" height="500px" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Counts (Poisson)
+
+&lt;img src="index_files/figure-html/log-odds-1.png" height="500px" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Dichotomous outcome (Bernoulli)
+
+&lt;img src="index_files/figure-html/p-log-odds-1.png" height="500px" style="display: block; margin: auto;" /&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="../macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
