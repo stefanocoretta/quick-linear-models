@@ -141,25 +141,25 @@ Photo by &lt;a href="https://unsplash.com/@joeyc?utm_source=unsplash&amp;utm_med
 ## -6.4081 -0.0543 -0.0096  0.0443  6.4612 
 ## 
 ## Coefficients:
-##                                      Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)                           0.04250    0.05389   0.789 0.430459
-## count                                 0.05316    0.01203   4.419 1.06e-05
-## gesturepoint                         -0.03288    0.07241  -0.454 0.649844
-## gesturereach                         -0.05245    0.07447  -0.704 0.481323
-## backgroundChinese                     0.01182    0.07391   0.160 0.872987
-## backgroundEnglish                    -0.04188    0.07418  -0.565 0.572416
-## count:gesturepoint                    0.08521    0.02285   3.729 0.000199
-## count:gesturereach                    0.03875    0.02185   1.773 0.076353
-## count:backgroundChinese               0.01143    0.01508   0.758 0.448524
-## count:backgroundEnglish               0.19619    0.02532   7.747 1.67e-14
-## gesturepoint:backgroundChinese       -0.03705    0.10101  -0.367 0.713811
-## gesturereach:backgroundChinese       -0.04620    0.10355  -0.446 0.655506
-## gesturepoint:backgroundEnglish       -0.07564    0.10082  -0.750 0.453208
-## gesturereach:backgroundEnglish        0.09170    0.10280   0.892 0.372491
-## count:gesturepoint:backgroundChinese  0.22048    0.02898   7.608 4.75e-14
-## count:gesturereach:backgroundChinese  0.22901    0.03409   6.718 2.56e-11
-## count:gesturepoint:backgroundEnglish  0.20844    0.03289   6.337 3.06e-10
-## count:gesturereach:backgroundEnglish -0.16156    0.03888  -4.156 3.42e-05
+##                                        Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)                           0.0006191  0.0509697   0.012 0.990310
+## count                                 0.2493477  0.0222840  11.190  &lt; 2e-16
+## gesturepoint                         -0.1085239  0.0701579  -1.547 0.122100
+## gesturereach                          0.0392469  0.0708575   0.554 0.579736
+## backgroundChinese                     0.0537003  0.0718066   0.748 0.454665
+## backgroundBengali                     0.0418825  0.0741789   0.565 0.572416
+## count:gesturepoint                    0.2936528  0.0236634  12.410  &lt; 2e-16
+## count:gesturereach                   -0.1228103  0.0321556  -3.819 0.000139
+## count:backgroundChinese              -0.1847537  0.0240683  -7.676 2.86e-14
+## count:backgroundBengali              -0.1961863  0.0253242  -7.747 1.67e-14
+## gesturepoint:backgroundChinese        0.0385925  0.0994090   0.388 0.697906
+## gesturereach:backgroundChinese       -0.1379059  0.1009806  -1.366 0.172238
+## gesturepoint:backgroundBengali        0.0756445  0.1008240   0.750 0.453208
+## gesturereach:backgroundBengali       -0.0917011  0.1027956  -0.892 0.372491
+## count:gesturepoint:backgroundChinese  0.0120445  0.0296253   0.407 0.684385
+## count:gesturereach:backgroundChinese  0.3905759  0.0414547   9.422  &lt; 2e-16
+## count:gesturepoint:backgroundBengali -0.2084393  0.0328945  -6.337 3.06e-10
+## count:gesturereach:backgroundBengali  0.1615633  0.0388780   4.156 3.42e-05
 ## 
 ## Residual standard error: 0.617 on 1575 degrees of freedom
 ##   (27 observations deleted due to missingness)
@@ -212,8 +212,7 @@ x_norm
 ```
 
 ```
-##  [1] -0.2623043 -1.2633027  0.6003291  0.7828663  2.7624742 -0.2418766
-##  [7] -0.4525371  1.0792690 -0.1550495  1.6177545
+##  [1]  0.5573834 -0.4222618  0.2401003 -0.4326738 -2.4642169  1.1406588  1.1011211  0.1398796 -0.7087424 -1.4275496
 ```
 
 ---
@@ -238,8 +237,8 @@ x_bern
 ```
 
 ```
-##  [1] FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [13]  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE FALSE
+##  [1]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE
+## [20]  TRUE
 ```
 
 ```r
@@ -249,7 +248,7 @@ table(x_bern)
 ```
 ## x_bern
 ## FALSE  TRUE 
-##     6    14
+##     8    12
 ```
 
 ---
@@ -318,19 +317,185 @@ class: center middle inverse
 
 ---
 
+# Counts: Poisson distribution
 
 
+```
+## 
+## Call:
+## glm(formula = ct ~ count, family = poisson(), data = gestures)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -3.4755  -0.5329  -0.5329  -0.5329   6.0319  
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept) -1.951931   0.062940  -31.01   &lt;2e-16
+## count        0.133939   0.002916   45.94   &lt;2e-16
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 2265.1  on 1592  degrees of freedom
+## Residual deviance: 1266.7  on 1591  degrees of freedom
+##   (27 observations deleted due to missingness)
+## AIC: 1683.4
+## 
+## Number of Fisher Scoring iterations: 6
+```
 
 ---
+
+# Log-odds
+
+
+```r
+# What is the log of 1?
+log(1)
+```
+
+```
+## [1] 0
+```
+
+```r
+# What is the exponential function at 0?
+exp(0)
+```
+
+```
+## [1] 1
+```
+
+--
+
+&lt;br&gt;
+
+Now try different numbers with `log()` and `exp()`.
+
+---
+
+# Log-odds
+
+&lt;img src="index_files/figure-html/log-odds-1.png" height="500px" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Counts: Poisson distribution
+
+
+```
+## 
+## Call:
+## glm(formula = ct ~ count, family = poisson(), data = gestures)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -3.4755  -0.5329  -0.5329  -0.5329   6.0319  
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept) -1.951931   0.062940  -31.01   &lt;2e-16
+## count        0.133939   0.002916   45.94   &lt;2e-16
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 2265.1  on 1592  degrees of freedom
+## Residual deviance: 1266.7  on 1591  degrees of freedom
+##   (27 observations deleted due to missingness)
+## AIC: 1683.4
+## 
+## Number of Fisher Scoring iterations: 6
+```
+
+---
+
+# Counts: Poisson distribution
 
 &lt;img src="index_files/figure-html/ct-2-plot-1.png" height="500px" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
-# Counts (Poisson)
+# Counts: Poisson distribution
 
-&lt;img src="index_files/figure-html/log-odds-1.png" height="500px" style="display: block; margin: auto;" /&gt;
+
+```
+## 
+## Call:
+## glm(formula = ct ~ count * background, family = poisson(), data = gestures)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -4.3831  -0.6120  -0.5519  -0.3468   5.7243  
+## 
+## Coefficients:
+##                          Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)             -1.675248   0.096869 -17.294  &lt; 2e-16
+## count                    0.123947   0.003593  34.499  &lt; 2e-16
+## backgroundChinese       -0.206647   0.145640  -1.419  0.15593
+## backgroundBengali       -1.135975   0.196911  -5.769 7.97e-09
+## count:backgroundChinese  0.024062   0.008582   2.804  0.00505
+## count:backgroundBengali  0.082224   0.016598   4.954 7.28e-07
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 2265.1  on 1592  degrees of freedom
+## Residual deviance: 1216.6  on 1587  degrees of freedom
+##   (27 observations deleted due to missingness)
+## AIC: 1641.2
+## 
+## Number of Fisher Scoring iterations: 7
+```
+
+---
+
+# Counts: Poisson distribution
+
+
+```r
+tidy(ct_lm_3, exponentiate = FALSE)
+```
+
+```
+## # A tibble: 6 × 5
+##   term                    estimate std.error statistic   p.value
+##   &lt;chr&gt;                      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)              -1.68     0.0969     -17.3  5.23e- 67
+## 2 count                     0.124    0.00359     34.5  8.40e-261
+## 3 backgroundChinese        -0.207    0.146       -1.42 1.56e-  1
+## 4 backgroundBengali        -1.14     0.197       -5.77 7.97e-  9
+## 5 count:backgroundChinese   0.0241   0.00858      2.80 5.05e-  3
+## 6 count:backgroundBengali   0.0822   0.0166       4.95 7.28e-  7
+```
+
+---
+
+# Counts: Poisson distribution
+
+
+```r
+tidy(ct_lm_3, exponentiate = TRUE)
+```
+
+```
+## # A tibble: 6 × 5
+##   term                    estimate std.error statistic   p.value
+##   &lt;chr&gt;                      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)                0.187   0.0969     -17.3  5.23e- 67
+## 2 count                      1.13    0.00359     34.5  8.40e-261
+## 3 backgroundChinese          0.813   0.146       -1.42 1.56e-  1
+## 4 backgroundBengali          0.321   0.197       -5.77 7.97e-  9
+## 5 count:backgroundChinese    1.02    0.00858      2.80 5.05e-  3
+## 6 count:backgroundBengali    1.09    0.0166       4.95 7.28e-  7
+```
+
+
+---
+
+# Counts: Poisson distribution
+
+&lt;img src="index_files/figure-html/ct-3-plot-1.png" height="500px" style="display: block; margin: auto;" /&gt;
 
 ---
 
