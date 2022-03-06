@@ -263,19 +263,47 @@ class: center middle inverse
 
 ---
 
-# Counts: Poisson distribution
+# Dichotomous outcome: Bernoulli distribution
 
-```{r ct-2}
-ct_lm_2 <- glm(ct ~ count, data = gestures, family = poisson())
+- Shallow Morphological Processing.
 
-summary(ct_lm_2)
+- English L1 and L2 speakers (L2 speakers are native speakers of Cantonese).
+
+- Lexical decision task (Word vs Non-Word).
+
+- Target: *unkindness* ([[un]-[kind]]-ness).
+
+- Primes: *prolong* (Unrelated), *unkind* (Constituent), *kindness* (Non-Constituent).
+
+---
+
+# Dichotomous outcome: Bernoulli distribution
+
+```{r shallow-lm-1}
+shallow <- read_csv("04-fit-models/shallow-morph.csv") %>%
+  filter(Critical_Filler == "Critical") %>%
+  mutate(
+    Relation_type = factor(Relation_type, levels = c("Unrelated", "Constituent", "NonConstituent"))
+  )
+
+shallow_lm_1 <- glm(ACC ~ Relation_type, data = shallow, family = binomial())
+
+summary(shallow_lm_1)
+```
+
+---
+
+# Do you notice something weird?
+
+```{r shallo-lm-1-2}
+summary(shallow_lm_1)
 ```
 
 ---
 
 # Log-odds
 
-```{r echo=TRUE}
+```{r log-exp, echo=TRUE}
 # What is the log of 1?
 log(1)
 
@@ -291,7 +319,7 @@ Now try different numbers with `log()` and `exp()`.
 
 ---
 
-# Log-odds
+# From log-odds to odds
 
 ```{r log-odds}
 tibble(
@@ -315,9 +343,120 @@ tibble(
 
 ---
 
+# From log-odds to odds: Examples
+
+- 10 mo infants perform on average 10 iconic gestures per day. At 11 mo, the number of gestures increases by a factor of 1.6. At 12 mo, there is a further increase by a factor of 1.2.
+
+--
+
+  - Calculate the average number of gestures per day at 12 months based on the 10 month average (10 gestures).
+
+--
+
+- The average number of errors L2 learners make decreases by a factor of 0.2 every year and a half.
+
+--
+
+  - Calculate the average number of errors after 6 years, assuming 265 errors at year 1.
+
+---
+
+# From log-odds to probabilities
+
+```{r plogis}
+# What is the exponential function at 0 log-odds?
+# In other words, what are the odds at 0 log-odds?
+exp(0)
+
+# What is the probability at 0 log-odds?
+plogis(0)
+
+# What is the probability at 1 log-odds?
+plogis(1)
+```
+
+--
+
+<br>
+
+Now try different numbers with `plogis()`.
+
+---
+
+# From log-odds to probabilities
+
+```{r p-log-odds}
+dots <- tibble(
+  p = seq(0.1, 0.9, by = 0.1),
+  log_odds = qlogis(p)
+)
+
+tibble(
+  p = seq(0, 1, by = 0.001),
+  log_odds = qlogis(p)
+) %>%
+  ggplot(aes(log_odds, p)) +
+  geom_hline(yintercept = 0.5, linetype = "dashed") +
+  geom_hline(yintercept = 0, colour = "#8856a7", size = 1) +
+  geom_hline(yintercept = 1, colour = "#8856a7", size = 1) +
+  geom_vline(xintercept = 0, alpha = 0.5) +
+  geom_line(size = 2) +
+  geom_point(data = dots, size = 4) +
+  scale_x_continuous(breaks = seq(-6, 6, by = 2), minor_breaks = NULL) +
+  scale_y_continuous(breaks = seq(0, 1, by = 0.1), minor_breaks = NULL) +
+  labs(
+    title = "Correspondence between log-odds and probabilities",
+    x = "log-odds",
+    y = "probability"
+  )
+```
+
+---
+
+# Dichotomous outcome: Bernoulli distribution
+
+```{r shallow-lm-1-3}
+summary(shallow_lm_1)
+```
+
+---
+
+# Dichotomous outcome: Bernoulli distribution
+
+```{r shallow-lm-1-plot}
+ggpredict(shallow_lm_1, terms = "Relation_type") %>%
+  plot()
+```
+
+
+---
+
+# Dichotomous outcome: Bernoulli distribution
+
+```{r shallow-lm-2}
+shallow_lm_2 <- glm(ACC ~ Relation_type * Group, data = shallow, family = binomial())
+
+summary(shallow_lm_2)
+```
+
+
+---
+
+# Dichotomous outcome: Bernoulli distribution
+
+```{r shallow-lm-2-plot}
+ggpredict(shallow_lm_2, terms = c("Group", "Relation_type")) %>%
+  plot()
+```
+
+
+---
+
 # Counts: Poisson distribution
 
-```{r ct-2-summary}
+```{r ct-2}
+ct_lm_2 <- glm(ct ~ count, data = gestures, family = poisson())
+
 summary(ct_lm_2)
 ```
 
@@ -367,32 +506,6 @@ ggpredict(ct_lm_3, terms = c("count [0:30 by=0.1]", "background")) %>%
   plot()
 ```
 
----
 
-# Dichotomous outcome (Bernoulli)
 
-```{r p-log-odds}
-dots <- tibble(
-  p = seq(0.1, 0.9, by = 0.1),
-  log_odds = qlogis(p)
-)
 
-tibble(
-  p = seq(0, 1, by = 0.001),
-  log_odds = qlogis(p)
-) %>%
-  ggplot(aes(log_odds, p)) +
-  geom_hline(yintercept = 0.5, linetype = "dashed") +
-  geom_hline(yintercept = 0, colour = "#8856a7", size = 1) +
-  geom_hline(yintercept = 1, colour = "#8856a7", size = 1) +
-  geom_vline(xintercept = 0, alpha = 0.5) +
-  geom_line(size = 2) +
-  geom_point(data = dots, size = 4) +
-  scale_x_continuous(breaks = seq(-6, 6, by = 2), minor_breaks = NULL) +
-  scale_y_continuous(breaks = seq(0, 1, by = 0.1), minor_breaks = NULL) +
-  labs(
-    title = "Correspondence between log-odds and probabilities",
-    x = "log-odds",
-    y = "probability"
-  )
-```

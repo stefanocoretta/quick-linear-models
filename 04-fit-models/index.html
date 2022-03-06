@@ -4,7 +4,7 @@
     <title>Linear models: Advanced topics</title>
     <meta charset="utf-8" />
     <meta name="author" content="Stefano Coretta" />
-    <meta name="date" content="2022-03-04" />
+    <meta name="date" content="2022-03-06" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 # Linear models: Advanced topics
 ### Stefano Coretta
 ### University of Edinburgh
-### 2022-03-04
+### 2022-03-06
 
 ---
 
@@ -212,7 +212,8 @@ x_norm
 ```
 
 ```
-##  [1]  0.5573834 -0.4222618  0.2401003 -0.4326738 -2.4642169  1.1406588  1.1011211  0.1398796 -0.7087424 -1.4275496
+##  [1]  1.3306356  0.7726106  0.6379435  2.1426533 -0.6830520 -1.2137140
+##  [7]  1.1342526 -0.5324498 -0.9334888  1.5504993
 ```
 
 ---
@@ -237,8 +238,8 @@ x_bern
 ```
 
 ```
-##  [1]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE
-## [20]  TRUE
+##  [1] FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE
+## [13]  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE
 ```
 
 ```r
@@ -317,31 +318,74 @@ class: center middle inverse
 
 ---
 
-# Counts: Poisson distribution
+# Dichotomous outcome: Bernoulli distribution
+
+- Shallow Morphological Processing.
+
+- English L1 and L2 speakers (L2 speakers are native speakers of Cantonese).
+
+- Lexical decision task (Word vs Non-Word).
+
+- Target: *unkindness* ([[un]-[kind]]-ness).
+
+- Primes: *prolong* (Unrelated), *unkind* (Constituent), *kindness* (Non-Constituent).
+
+---
+
+# Dichotomous outcome: Bernoulli distribution
 
 
 ```
 ## 
 ## Call:
-## glm(formula = ct ~ count, family = poisson(), data = gestures)
+## glm(formula = ACC ~ Relation_type, family = binomial(), data = shallow)
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -3.4755  -0.5329  -0.5329  -0.5329   6.0319  
+## -2.0269   0.5238   0.5238   0.6438   0.7518  
 ## 
 ## Coefficients:
-##              Estimate Std. Error z value Pr(&gt;|z|)
-## (Intercept) -1.951931   0.062940  -31.01   &lt;2e-16
-## count        0.133939   0.002916   45.94   &lt;2e-16
+##                             Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)                   1.4684     0.0918  15.997  &lt; 2e-16
+## Relation_typeConstituent      0.4485     0.1411   3.179  0.00148
+## Relation_typeNonConstituent  -0.3492     0.1492  -2.341  0.01921
 ## 
-## (Dispersion parameter for poisson family taken to be 1)
+## (Dispersion parameter for binomial family taken to be 1)
 ## 
-##     Null deviance: 2265.1  on 1592  degrees of freedom
-## Residual deviance: 1266.7  on 1591  degrees of freedom
-##   (27 observations deleted due to missingness)
-## AIC: 1683.4
+##     Null deviance: 1810.9  on 1949  degrees of freedom
+## Residual deviance: 1784.8  on 1947  degrees of freedom
+## AIC: 1790.8
 ## 
-## Number of Fisher Scoring iterations: 6
+## Number of Fisher Scoring iterations: 4
+```
+
+---
+
+# Do you notice something weird?
+
+
+```
+## 
+## Call:
+## glm(formula = ACC ~ Relation_type, family = binomial(), data = shallow)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.0269   0.5238   0.5238   0.6438   0.7518  
+## 
+## Coefficients:
+##                             Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)                   1.4684     0.0918  15.997  &lt; 2e-16
+## Relation_typeConstituent      0.4485     0.1411   3.179  0.00148
+## Relation_typeNonConstituent  -0.3492     0.1492  -2.341  0.01921
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 1810.9  on 1949  degrees of freedom
+## Residual deviance: 1784.8  on 1947  degrees of freedom
+## AIC: 1790.8
+## 
+## Number of Fisher Scoring iterations: 4
 ```
 
 ---
@@ -375,9 +419,133 @@ Now try different numbers with `log()` and `exp()`.
 
 ---
 
-# Log-odds
+# From log-odds to odds
 
 &lt;img src="index_files/figure-html/log-odds-1.png" height="500px" style="display: block; margin: auto;" /&gt;
+
+---
+
+# From log-odds to odds: Examples
+
+- 10 mo infants perform on average 10 iconic gestures per day. At 11 mo, the number of gestures increases by a factor of 1.6. At 12 mo, there is a further increase by a factor of 1.2.
+
+--
+
+  - Calculate the average number of gestures per day at 12 months based on the 10 month average (10 gestures).
+
+--
+
+- The average number of errors L2 learners make decreases by a factor of 0.2 every year and a half.
+
+--
+
+  - Calculate the average number of errors after 6 years, assuming 265 errors at year 1.
+
+---
+
+# From log-odds to probabilities
+
+
+```
+## [1] 1
+```
+
+```
+## [1] 0.5
+```
+
+```
+## [1] 0.7310586
+```
+
+--
+
+&lt;br&gt;
+
+Now try different numbers with `plogis()`.
+
+---
+
+# From log-odds to probabilities
+
+&lt;img src="index_files/figure-html/p-log-odds-1.png" height="500px" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Dichotomous outcome: Bernoulli distribution
+
+
+```
+## 
+## Call:
+## glm(formula = ACC ~ Relation_type, family = binomial(), data = shallow)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.0269   0.5238   0.5238   0.6438   0.7518  
+## 
+## Coefficients:
+##                             Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)                   1.4684     0.0918  15.997  &lt; 2e-16
+## Relation_typeConstituent      0.4485     0.1411   3.179  0.00148
+## Relation_typeNonConstituent  -0.3492     0.1492  -2.341  0.01921
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 1810.9  on 1949  degrees of freedom
+## Residual deviance: 1784.8  on 1947  degrees of freedom
+## AIC: 1790.8
+## 
+## Number of Fisher Scoring iterations: 4
+```
+
+---
+
+# Dichotomous outcome: Bernoulli distribution
+
+&lt;img src="index_files/figure-html/shallow-lm-1-plot-1.png" height="500px" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Dichotomous outcome: Bernoulli distribution
+
+
+```
+## 
+## Call:
+## glm(formula = ACC ~ Relation_type * Group, family = binomial(), 
+##     data = shallow)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.1433   0.4604   0.5711   0.6750   0.7667  
+## 
+## Coefficients:
+##                                     Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)                           1.6094     0.1438  11.189   &lt;2e-16
+## Relation_typeConstituent              0.5814     0.2290   2.539   0.0111
+## Relation_typeNonConstituent          -0.4327     0.2293  -1.887   0.0592
+## GroupL2                              -0.2461     0.1870  -1.316   0.1880
+## Relation_typeConstituent:GroupL2     -0.2137     0.2913  -0.734   0.4630
+## Relation_typeNonConstituent:GroupL2   0.1434     0.3021   0.475   0.6349
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 1810.9  on 1949  degrees of freedom
+## Residual deviance: 1778.5  on 1944  degrees of freedom
+## AIC: 1790.5
+## 
+## Number of Fisher Scoring iterations: 4
+```
+
+
+---
+
+# Dichotomous outcome: Bernoulli distribution
+
+&lt;img src="index_files/figure-html/shallow-lm-2-plot-1.png" height="500px" style="display: block; margin: auto;" /&gt;
+
 
 ---
 
@@ -497,11 +665,9 @@ tidy(ct_lm_3, exponentiate = TRUE)
 
 &lt;img src="index_files/figure-html/ct-3-plot-1.png" height="500px" style="display: block; margin: auto;" /&gt;
 
----
 
-# Dichotomous outcome (Bernoulli)
 
-&lt;img src="index_files/figure-html/p-log-odds-1.png" height="500px" style="display: block; margin: auto;" /&gt;
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
