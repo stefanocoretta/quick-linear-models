@@ -1,0 +1,94 @@
+---
+title: 'Linear models: exercises'
+author: "Stefano Coretta"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, dpi = 300, fig.width = 7, fig.height = 5, out.height = "500px", fig.align = "center")
+knitr::opts_knit$set(root.dir = here::here())
+library(tidyverse)
+theme_set(theme_minimal(base_size = 16))
+library(lme4)
+library(ggeffects)
+library(broom.mixed)
+options(ggplot2.discrete.colour = RColorBrewer::brewer.pal(5, "Dark2"))
+options(show.signif.stars = FALSE)
+```
+
+# Read data
+
+```{r shallow}
+shallow <- read_csv("04-fit-models/shallow-morph.csv") %>%
+  filter(Critical_Filler == "Critical") %>%
+  mutate(
+    Relation_type = factor(Relation_type, levels = c("Unrelated", "Constituent", "NonConstituent"))
+  )
+```
+
+# Summarise the data
+
+Calculate summary statistics.
+
+
+
+
+
+
+
+# Plot the data
+
+Create a variety of plots to show patterns (or absence thereof).
+
+
+
+
+
+
+# Model the data with linear models
+
+Let's first try with a simple model.
+
+```{r shallow-lm-1}
+shallow_lm_1 <- glmer(
+  ACC ~ Relation_type + (Relation_type | ID),
+  data = shallow,
+  family = binomial()
+)
+```
+
+Did it work?
+
+```{r shallow-lm-2}
+shallow_lm_2 <- glmer(
+  ACC ~ Relation_type + (1 | ID),
+  data = shallow,
+  family = binomial()
+)
+```
+
+Did it work?
+
+If it did work, print the summary with `summary()` and try to interpret the coefficients.
+
+
+
+
+
+
+
+Then plot the model with `ggpredict()` from the ggeffects package (see slides from `04-fit-models`).
+
+
+
+
+
+Now run the model again but include the predictor `Group`. Shall you include an interaction with `Relation_type` too?
+
+
+
+
+
+
+Now try to write up the results of the two last models.
