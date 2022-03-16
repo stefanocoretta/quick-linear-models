@@ -1,0 +1,77 @@
+---
+title: "Linear models: Reporting"
+author: "Stefano Coretta"
+institute: "University of Edinburgh"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css:
+      - default
+      - ../ipa-fonts.css
+      - ../custom.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      beforeInit: "../macros.js"
+      ratio: 16:9
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, dpi = 300, fig.width = 7, fig.height = 5, out.height = "500px", fig.align = "center")
+knitr::opts_knit$set(root.dir = here::here())
+options(htmltools.dir.version = FALSE)
+library(tidyverse)
+theme_set(theme_minimal(base_size = 16))
+options(ggplot2.discrete.colour = RColorBrewer::brewer.pal(5, "Dark2"))
+library(xaringanExtra)
+use_xaringan_extra(c("panelset", "tachyons"))
+library(ggeffects)
+options(show.signif.stars = FALSE)
+library(lme4)
+library(broom.mixed)
+```
+
+```{r read-data}
+shallow <- read_csv("04-fit-models/shallow-morph.csv") %>%
+  filter(Critical_Filler == "Critical") %>%
+  mutate(
+    Relation_type = factor(Relation_type, levels = c("Unrelated", "Constituent", "NonConstituent"))
+  )
+```
+
+
+# Reporting model specifications
+
+```{r shallow-lm-2, echo=TRUE}
+shallow_lm_2 <- glmer(ACC ~ Relation_type * Group + (1 | ID), data = shallow, family = binomial())
+
+summary(shallow_lm_2)
+```
+
+---
+
+# Reporting model specifications
+
+```{r shallow-lm-2-2, echo=TRUE, eval=FALSE}
+shallow_lm_2 <- glmer(ACC ~ Relation_type * Group + (1 | ID), data = shallow, family = binomial())
+
+summary(shallow_lm_2)
+```
+
+We fitted a linear model with lme4 (Bates et al. 2015) in R 4.1.2 (R Core Team 2021), using a Bernoulli distribution family (aka logistic regression, binomial regression).
+As predictors, we included Relation Type (Unrelated, Constituent, Nonconstituent), Group (L1, L2), and an interaction between the two.
+Both predictors were coded using treatment contrasts (aka dummy coding), with the first level as the reference level.
+We also included a by-participant random intercept (we tried also including a by-participant random slope for Relation Type, but the model failed to converge).
+
+---
+
+# Reporting model results
+
+```{r shallow-lm-2-3, echo=FALSE}
+tidy(shallow_lm_2, effects = "fixed")
+```
+
+According to the linear model fitted to the accuracy data, native speakers show 85% accuracy ($\beta$=1.746, SE=0.196, $z$=8.892, $p$ < 0.0001) when the relation type is Unrelated, 91% accuracy ($\beta$=0.606, SE=0.231, $z$=2.624, $p$ = 0.00869) with Constituent type, and 78% accuracy when the type is Nonconstituent ($\beta$=-0.459, SE=0.234, $z$=1.958, $p$ = 0.05011).
+The estimates for the non-native group indicates that they don't significantly differ from those of native (see Table X for the model output.)

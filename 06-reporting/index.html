@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Linear models: Reporting</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Stefano Coretta" />
+    <meta name="date" content="2022-03-16" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="../ipa-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="../custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Linear models: Reporting
+### Stefano Coretta
+### University of Edinburgh
+### 2022-03-16
+
+---
+
+
+
+
+
+
+
+# Reporting model specifications
+
+
+```r
+shallow_lm_2 &lt;- glmer(ACC ~ Relation_type * Group + (1 | ID), data = shallow, family = binomial())
+
+summary(shallow_lm_2)
+```
+
+```
+## Generalized linear mixed model fit by maximum likelihood (Laplace
+##   Approximation) [glmerMod]
+##  Family: binomial  ( logit )
+## Formula: ACC ~ Relation_type * Group + (1 | ID)
+##    Data: shallow
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##   1746.4   1785.4   -866.2   1732.4     1943 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -3.5950  0.2706  0.3767  0.4739  1.0199 
+## 
+## Random effects:
+##  Groups Name        Variance Std.Dev.
+##  ID     (Intercept) 0.456    0.6753  
+## Number of obs: 1950, groups:  ID, 65
+## 
+## Fixed effects:
+##                                     Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)                           1.7461     0.1964   8.893  &lt; 2e-16
+## Relation_typeConstituent              0.6064     0.2311   2.624  0.00869
+## Relation_typeNonConstituent          -0.4590     0.2343  -1.959  0.05011
+## GroupL2                              -0.2492     0.2572  -0.969  0.33244
+## Relation_typeConstituent:GroupL2     -0.2136     0.2955  -0.723  0.46982
+## Relation_typeNonConstituent:GroupL2   0.1462     0.3100   0.472  0.63728
+## 
+## Correlation of Fixed Effects:
+##             (Intr) Rltn_C Rlt_NC GropL2 R_C:GL
+## Rltn_typCns -0.464                            
+## Rltn_typNnC -0.469  0.393                     
+## GroupL2     -0.751  0.356  0.356              
+## Rltn_tC:GL2  0.365 -0.782 -0.307 -0.476       
+## Rltn_NC:GL2  0.353 -0.297 -0.756 -0.460  0.397
+```
+
+---
+
+# Reporting model specifications
+
+
+```r
+shallow_lm_2 &lt;- glmer(ACC ~ Relation_type * Group + (1 | ID), data = shallow, family = binomial())
+
+summary(shallow_lm_2)
+```
+
+We fitted a linear model with lme4 (Bates et al. 2015) in R 4.1.2 (R Core Team 2021), using a Bernoulli distribution family (aka logistic regression, binomial regression).
+As predictors, we included Relation Type (Unrelated, Constituent, Nonconstituent), Group (L1, L2), and an interaction between the two.
+Both predictors were coded using treatment contrasts (aka dummy coding), with the first level as the reference level.
+We also included a by-participant random intercept (we tried also including a by-participant random slope for Relation Type, but the model failed to converge).
+
+---
+
+# Reporting model results
+
+
+```
+## # A tibble: 6 × 6
+##   effect term                              estimate std.error statistic  p.value
+##   &lt;chr&gt;  &lt;chr&gt;                                &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 fixed  (Intercept)                          1.75      0.196     8.89  5.97e-19
+## 2 fixed  Relation_typeConstituent             0.606     0.231     2.62  8.69e- 3
+## 3 fixed  Relation_typeNonConstituent         -0.459     0.234    -1.96  5.01e- 2
+## 4 fixed  GroupL2                             -0.249     0.257    -0.969 3.32e- 1
+## 5 fixed  Relation_typeConstituent:GroupL2    -0.214     0.296    -0.723 4.70e- 1
+## 6 fixed  Relation_typeNonConstituent:Grou…    0.146     0.310     0.472 6.37e- 1
+```
+
+According to the linear model fitted to the accuracy data, native speakers show 85% accuracy ($\beta$=1.746, SE=0.196, `\(z\)`=8.892, `\(p\)` &lt; 0.0001) when the relation type is Unrelated, 91% accuracy ($\beta$=0.606, SE=0.231, `\(z\)`=2.624, `\(p\)` = 0.00869) with Constituent type, and 78% accuracy when the type is Nonconstituent ($\beta$=-0.459, SE=0.234, `\(z\)`=1.958, `\(p\)` = 0.05011).
+The estimates for the non-native group indicates that they don't significantly differ from those of native (see Table X for the model output.)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="../macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
