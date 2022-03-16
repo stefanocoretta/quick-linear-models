@@ -73,5 +73,5 @@ We also included a by-participant random intercept (we tried also including a by
 tidy(shallow_lm_2, effects = "fixed")
 ```
 
-According to the linear model fitted to the accuracy data, native speakers show 85% accuracy ($\beta$=1.746, SE=0.196, $z$=8.892, $p$ < 0.0001) when the relation type is Unrelated, 91% accuracy ($\beta$=0.606, SE=0.231, $z$=2.624, $p$ = 0.00869) with Constituent type, and 78% accuracy when the type is Nonconstituent ($\beta$=-0.459, SE=0.234, $z$=1.958, $p$ = 0.05011).
+According to the linear model fitted to the accuracy data, native speakers show 85% accuracy (`\(\beta = 1.746\)`, $SE=0.196$, $z=8.892$, $p < 0.0001$) when the relation type is Unrelated, 91% accuracy (`\(\beta=0.606\)`, $SE=0.231$, $z=2.624$, $p = 0.00869$) with Constituent type, and 78% accuracy when the type is Nonconstituent (`\(\beta=-0.459\)`, $SE=0.234$, $z=1.958$, $p = 0.05011$).
 The estimates for the non-native group indicates that they don't significantly differ from those of native (see Table X for the model output.)

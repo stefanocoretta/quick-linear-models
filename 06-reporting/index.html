@@ -40,8 +40,8 @@ summary(shallow_lm_2)
 ```
 
 ```
-## Generalized linear mixed model fit by maximum likelihood (Laplace
-##   Approximation) [glmerMod]
+## Generalized linear mixed model fit by maximum likelihood
+##   (Laplace Approximation) [glmerMod]
 ##  Family: binomial  ( logit )
 ## Formula: ACC ~ Relation_type * Group + (1 | ID)
 ##    Data: shallow
@@ -59,13 +59,20 @@ summary(shallow_lm_2)
 ## Number of obs: 1950, groups:  ID, 65
 ## 
 ## Fixed effects:
-##                                     Estimate Std. Error z value Pr(&gt;|z|)
-## (Intercept)                           1.7461     0.1964   8.893  &lt; 2e-16
-## Relation_typeConstituent              0.6064     0.2311   2.624  0.00869
-## Relation_typeNonConstituent          -0.4590     0.2343  -1.959  0.05011
-## GroupL2                              -0.2492     0.2572  -0.969  0.33244
-## Relation_typeConstituent:GroupL2     -0.2136     0.2955  -0.723  0.46982
-## Relation_typeNonConstituent:GroupL2   0.1462     0.3100   0.472  0.63728
+##                                     Estimate Std. Error z value
+## (Intercept)                           1.7461     0.1964   8.893
+## Relation_typeConstituent              0.6064     0.2311   2.624
+## Relation_typeNonConstituent          -0.4590     0.2343  -1.959
+## GroupL2                              -0.2492     0.2572  -0.969
+## Relation_typeConstituent:GroupL2     -0.2136     0.2955  -0.723
+## Relation_typeNonConstituent:GroupL2   0.1462     0.3100   0.472
+##                                     Pr(&gt;|z|)
+## (Intercept)                          &lt; 2e-16
+## Relation_typeConstituent             0.00869
+## Relation_typeNonConstituent          0.05011
+## GroupL2                              0.33244
+## Relation_typeConstituent:GroupL2     0.46982
+## Relation_typeNonConstituent:GroupL2  0.63728
 ## 
 ## Correlation of Fixed Effects:
 ##             (Intr) Rltn_C Rlt_NC GropL2 R_C:GL
@@ -99,17 +106,17 @@ We also included a by-participant random intercept (we tried also including a by
 
 ```
 ## # A tibble: 6 × 6
-##   effect term                              estimate std.error statistic  p.value
-##   &lt;chr&gt;  &lt;chr&gt;                                &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 fixed  (Intercept)                          1.75      0.196     8.89  5.97e-19
-## 2 fixed  Relation_typeConstituent             0.606     0.231     2.62  8.69e- 3
-## 3 fixed  Relation_typeNonConstituent         -0.459     0.234    -1.96  5.01e- 2
-## 4 fixed  GroupL2                             -0.249     0.257    -0.969 3.32e- 1
-## 5 fixed  Relation_typeConstituent:GroupL2    -0.214     0.296    -0.723 4.70e- 1
-## 6 fixed  Relation_typeNonConstituent:Grou…    0.146     0.310     0.472 6.37e- 1
+##   effect term              estimate std.error statistic  p.value
+##   &lt;chr&gt;  &lt;chr&gt;                &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 fixed  (Intercept)          1.75      0.196     8.89  5.97e-19
+## 2 fixed  Relation_typeCon…    0.606     0.231     2.62  8.69e- 3
+## 3 fixed  Relation_typeNon…   -0.459     0.234    -1.96  5.01e- 2
+## 4 fixed  GroupL2             -0.249     0.257    -0.969 3.32e- 1
+## 5 fixed  Relation_typeCon…   -0.214     0.296    -0.723 4.70e- 1
+## 6 fixed  Relation_typeNon…    0.146     0.310     0.472 6.37e- 1
 ```
 
-According to the linear model fitted to the accuracy data, native speakers show 85% accuracy ($\beta$=1.746, SE=0.196, `\(z\)`=8.892, `\(p\)` &lt; 0.0001) when the relation type is Unrelated, 91% accuracy ($\beta$=0.606, SE=0.231, `\(z\)`=2.624, `\(p\)` = 0.00869) with Constituent type, and 78% accuracy when the type is Nonconstituent ($\beta$=-0.459, SE=0.234, `\(z\)`=1.958, `\(p\)` = 0.05011).
+According to the linear model fitted to the accuracy data, native speakers show 85% accuracy (`\(\beta = 1.746\)`, `\(SE=0.196\)`, `\(z=8.892\)`, `\(p &lt; 0.0001\)`) when the relation type is Unrelated, 91% accuracy (`\(\beta=0.606\)`, `\(SE=0.231\)`, `\(z=2.624\)`, `\(p = 0.00869\)`) with Constituent type, and 78% accuracy when the type is Nonconstituent (`\(\beta=-0.459\)`, `\(SE=0.234\)`, `\(z=1.958\)`, `\(p = 0.05011\)`).
 The estimates for the non-native group indicates that they don't significantly differ from those of native (see Table X for the model output.)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
